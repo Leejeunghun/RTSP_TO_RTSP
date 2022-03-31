@@ -27,3 +27,7 @@ e.g: `rtsp://192.168.1.12:8554/video_stream`
 
 You can either use any video player which supports rtsp streaming like VLC player or you can use the `open-rtsp.py` script to view the video feed.
 
+## 추가 RTSP 기능 추가
+
+Steam.py 코드중 23 번쨰 줄에 IP 주소 변경하여 사용하면 된다.
+ self.cap = cv2.VideoCapture('RTSP IP 주소 입력하세요')

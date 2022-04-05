@@ -20,7 +20,7 @@ from gi.repository import Gst, GstRtspServer, GObject
 class SensorFactory(GstRtspServer.RTSPMediaFactory):
     def __init__(self, **properties):
         super(SensorFactory, self).__init__(**properties)
-        self.cap = cv2.VideoCapture('RTSP IP 주소 입력하세요')
+        self.cap = cv2.VideoCapture('rtsp://192.168.100.10:554/user=admin&password=&channel=1&stream=0.sdp')
         self.number_frames = 0
         self.fps = opt.fps
         self.duration = 1 / self.fps * Gst.SECOND  # duration of a frame in nanoseconds
@@ -37,7 +37,8 @@ class SensorFactory(GstRtspServer.RTSPMediaFactory):
             ret, frame = self.cap.read()
             if ret:
                 # It is better to change the resolution of the camera 
-                # instead of changing the image shape as it affects the image quality.
+                # instead of changing the image shape as it affects the image quality
+#                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 frame = cv2.resize(frame, (opt.image_width, opt.image_height), \
                     interpolation = cv2.INTER_LINEAR)
                 data = frame.tostring()

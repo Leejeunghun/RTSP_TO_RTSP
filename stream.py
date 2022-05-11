@@ -39,6 +39,7 @@ class SensorFactory(GstRtspServer.RTSPMediaFactory):
         #쓰레드 추가
         self.VideoList = []
         self.thread_monitor = self.MonitorThread()
+        self.thread_monitor.daemon = True
         self.thread_monitor.start()
         
     # method to capture the video feed from the camera and push it to the
@@ -47,9 +48,6 @@ class SensorFactory(GstRtspServer.RTSPMediaFactory):
         if self.thread_monitor.Video_List:
           # It is better to change the resolution of the camera 
            # instead of changing the image shape as it affects the image quality
-                # Enter your Sample code 
-#                frame = cv2.GaussianBlur(frame,(5,5),0) #Sample Code 
-                ######################
             frame = self.thread_monitor.Video_List.pop(0)
             data = frame.tostring()
             buf = Gst.Buffer.new_allocate(None, len(data), None)

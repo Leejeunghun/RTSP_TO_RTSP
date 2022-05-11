@@ -82,9 +82,10 @@ class SensorFactory(GstRtspServer.RTSPMediaFactory):
         def run(self):
             while(1):
                 ret, frame = self.cap.read()
-                frame = cv2.resize(frame, (opt.image_width, opt.image_height),interpolation = cv2.INTER_LINEAR)
-                self.Video_List.append(frame)
-                self.duration = 1 / opt.fps  # duration of a frame in nanoseconds
+                if ret :
+                    frame = cv2.resize(frame, (opt.image_width, opt.image_height),interpolation = cv2.INTER_LINEAR)
+                    self.Video_List.append(frame)
+                    self.duration = 1 / opt.fps  # duration of a frame in nanoseconds
                 #time.sleep(self.duration)
 
 # Rtsp server implementation where we attach the factory sensor with the stream uri
